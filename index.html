@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Savita Okhuysen · Data Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Outfit:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #000000;
+      --bg-card:   #0d0d0d;
+      --bg-hover:  #141414;
+      --border:    #2a2a2a;
+      --border-hi: #3d3d3d;
+      --gold:      #c8a84b;
+      --gold-dim:  #8a6e2f;
+      --text:      #ffffff;
+      --text-sub:  #cccccc;
+      --text-dim:  #888888;
+      --white:     #ffffff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Outfit', sans-serif; font-weight: 300;
+      line-height: 1.7; -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 5vw;
+      background: rgba(0,0,0,0.96); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.15rem;
+      font-weight: 500; color: var(--white); letter-spacing: 0.03em;
+    }
+    .nav-name span { color: var(--white); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-sub); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      display: flex; align-items: center;
+      padding: 5rem 5vw 3rem; border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center;
+    }
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1rem; display: block;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5.5vw, 5rem); font-weight: 600;
+      line-height: 1.05; color: var(--white); margin-bottom: 1.5rem; letter-spacing: -0.01em;
+    }
+    h1 em { font-style: italic; color: var(--gold); }
+    .hero-bio {
+      font-size: 1rem; color: var(--text-sub); max-width: 520px;
+      margin-bottom: 0; line-height: 1.75;
+    }
+    .hero-bio strong { color: var(--white); font-weight: 400; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      font-family: 'Outfit', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      text-decoration: none; padding: 0.85rem 2rem; transition: all 0.2s; border: none; cursor: pointer;
+    }
+    .btn-solid { background: var(--gold); color: #000; font-weight: 500; }
+    .btn-solid:hover { background: #d9bc6a; }
+    .btn-outline { background: transparent; color: var(--text-sub); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--border-hi); color: var(--white); }
+    .hero-stats {
+      display: flex; flex-direction: column; gap: 2.5rem;
+      padding-left: 4rem; border-left: 1px solid var(--border);
+    }
+    .stat-val {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.6rem;
+      font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 0.3rem;
+    }
+    .stat-lbl {
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-dim); max-width: 140px; line-height: 1.4;
+    }
+
+    /* SECTIONS */
+    section { padding: 4rem 5vw; border-bottom: 1px solid var(--border); }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .sec-header { margin-bottom: 4rem; }
+    .sec-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim);
+      margin-bottom: 1rem; display: block;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 500;
+      color: var(--white); letter-spacing: -0.01em;
+    }
+    .sec-desc { margin-top: 0.75rem; font-size: 0.9rem; color: var(--text-sub); max-width: 520px; }
+
+    /* IMPACT ROW */
+    .impact-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border);
+    }
+    .impact-cell {
+      padding: 2.25rem 2rem; border-right: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .impact-cell:last-child { border-right: none; }
+    .impact-cell:hover { background: var(--bg-card); }
+    .impact-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.2rem;
+      font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 0.5rem;
+    }
+    .impact-txt { font-size: 0.8rem; color: var(--text-sub); line-height: 1.55; }
+
+    /* PROJECTS */
+    .project-row {
+      display: grid; grid-template-columns: 64px 1fr auto;
+      gap: 2.5rem; align-items: start; padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border); transition: background 0.2s;
+    }
+    .project-row:first-child { border-top: 1px solid var(--border); }
+    .project-row:hover { background: var(--bg-card); padding-left: 1.5rem; padding-right: 1.5rem; margin: 0 -1.5rem; }
+    .proj-num {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      color: var(--text-dim); letter-spacing: 0.1em; padding-top: 0.2rem;
+    }
+    .proj-type {
+      font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 0.5rem;
+    }
+    .proj-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.35rem;
+      font-weight: 500; color: var(--white); margin-bottom: 0.5rem; line-height: 1.25;
+    }
+    .proj-impact { font-size: 0.8rem; color: var(--gold); margin-bottom: 0.75rem; }
+    .proj-desc {
+      font-size: 0.85rem; color: var(--text-sub); max-width: 580px;
+      line-height: 1.65; margin-bottom: 1rem;
+    }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .proj-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+      padding: 0.2rem 0.55rem; border: 1px solid var(--border);
+      color: var(--text-dim); letter-spacing: 0.06em;
+    }
+    .proj-link {
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none;
+      display: flex; align-items: center; gap: 0.4rem;
+      white-space: nowrap; transition: color 0.2s; padding-top: 0.2rem;
+    }
+    .proj-link:hover { color: var(--gold); }
+
+    /* EXPERIENCE */
+    .exp-row {
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 3rem; padding: 3rem 0; border-bottom: 1px solid var(--border);
+    }
+    .exp-row:first-child { border-top: 1px solid var(--border); }
+    .exp-date {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      color: var(--gold-dim); letter-spacing: 0.08em; margin-bottom: 0.4rem;
+    }
+    .exp-co { font-size: 0.82rem; color: var(--text-sub); margin-bottom: 0.25rem; }
+    .exp-loc { font-size: 0.72rem; color: var(--text-dim); }
+    .exp-role {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+      font-weight: 500; color: var(--white); margin-bottom: 1rem;
+    }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .exp-bullets li {
+      font-size: 0.85rem; color: var(--text-sub);
+      padding-left: 1.25rem; position: relative; line-height: 1.6;
+    }
+    .exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--text-dim); font-size: 0.75rem; }
+    .exp-bullets li strong { color: var(--white); font-weight: 500; }
+
+    /* CERTS */
+    .certs-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+    }
+    .cert-card { background: var(--bg-card); padding: 2rem; transition: background 0.2s; }
+    .cert-card:hover { background: var(--bg-hover); }
+    .cert-badge {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold);
+      border: 1px solid var(--gold-dim); display: inline-block;
+      padding: 0.2rem 0.55rem; margin-bottom: 1rem;
+    }
+    .cert-name {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+      font-weight: 500; color: var(--white); line-height: 1.3; margin-bottom: 0.35rem;
+    }
+    .cert-issuer { font-size: 0.75rem; color: var(--white); margin-bottom: 0.5rem; }
+    .cert-exp { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--white); }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+    .skill-group-name {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim);
+      margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+    }
+    .skill-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .skill-item {
+      font-size: 0.85rem; color: var(--text-sub); padding: 0.5rem 0.75rem;
+      border-left: 2px solid var(--border); transition: border-color 0.2s, color 0.2s;
+    }
+    .skill-item:hover { border-color: var(--gold); color: var(--white); }
+
+    /* CONTACT */
+    .contact-wrap { max-width: 600px; margin: 0 auto; text-align: center; }
+    .contact-wrap p { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 2.5rem; }
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+    }
+    .contact-item {
+      background: var(--bg-card); padding: 1.5rem; text-decoration: none;
+      display: flex; flex-direction: column; gap: 0.3rem; transition: background 0.2s;
+    }
+    .contact-item:hover { background: var(--bg-hover); }
+    .contact-item-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); }
+    .contact-item-val { font-size: 0.9rem; color: var(--white); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em;
+    }
+    footer a { color: var(--text-dim); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+
+    /* REVEAL */
+    .reveal { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: row; border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 2rem; flex-wrap: wrap; }
+      .impact-row { grid-template-columns: repeat(2,1fr); }
+      .impact-cell:nth-child(2) { border-right: none; }
+      .exp-row { grid-template-columns: 1fr; gap: 0.75rem; }
+      .project-row { grid-template-columns: 1fr; gap: 0.75rem; }
+      .proj-num { display: none; }
+      .nav-links { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">Savita <span>Okhuysen</span></div>
+  <ul class="nav-links">
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">Data Analyst · BI Engineer · Business Process Automation</div>
+      <h1>Data that drives<br><em>measurable</em><br>results.</h1>
+      <p class="hero-bio">
+        <strong>6+ years</strong> delivering revenue growth and operational savings across
+        <strong>banking, real estate, and retail</strong> — using Power BI, Python, SQL,
+        and the full Microsoft data stack.
+      </p>
+
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-val">$200K+</div>
+        <div class="stat-lbl">Revenue generated for clients</div>
+      </div>
+      <div>
+        <div class="stat-val">$120K+</div>
+        <div class="stat-lbl">Operational costs reduced</div>
+      </div>
+      <div>
+        <div class="stat-val">85%</div>
+        <div class="stat-lbl">Reporting time eliminated</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="impact" style="padding-top:2rem;padding-bottom:2rem;">
+  <div class="container">
+    <div class="impact-row reveal">
+      <div class="impact-cell">
+        <div class="impact-num">150+</div>
+        <div class="impact-txt">Abatement filings per cycle, up from ~80, via Python prospecting pipeline</div>
+      </div>
+      <div class="impact-cell">
+        <div class="impact-num">1,500+</div>
+        <div class="impact-txt">Commercial properties in a $1B+ dataset built for tax appeal targeting</div>
+      </div>
+      <div class="impact-cell">
+        <div class="impact-num">5 hrs</div>
+        <div class="impact-txt">Weekly manual processing eliminated with Power Automate & Office Scripts</div>
+      </div>
+      <div class="impact-cell">
+        <div class="impact-num">100%</div>
+        <div class="impact-txt">Regulatory compliance maintained as Security Champion through all audits</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-label">01 · Projects</span>
+      <h2>Selected Work</h2>
+      <p class="sec-desc">Real projects from real roles — each tied to a measurable business outcome.</p>
+    </div>
+
+    <div class="project-row reveal">
+      <div class="proj-num">01</div>
+      <div>
+        <div class="proj-type">Power BI · Finance · Banking</div>
+        <div class="proj-title">Financial Performance Dashboard Suite</div>
+        <div class="proj-impact">↑ $100K in annual operational savings identified</div>
+        <p class="proj-desc">Star schema semantic model with DAX measures for MoM/YoY variance, rolling KPIs, budget vs. actuals, and drillthrough pages. Includes row-level security and an executive summary layout built for C-suite consumption.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Power BI</span><span class="proj-tag">DAX</span>
+          <span class="proj-tag">Star Schema</span><span class="proj-tag">RLS</span><span class="proj-tag">Power Query</span>
+        </div>
+      </div>
+      <a href="#" class="proj-link">GitHub ↗</a>
+    </div>
+
+    <div class="project-row reveal">
+      <div class="proj-num">02</div>
+      <div>
+        <div class="proj-type">Python · ETL · Real Estate</div>
+        <div class="proj-title">$1B+ Commercial Property Prospecting Pipeline</div>
+        <div class="proj-impact">↑ $100K–$200K additional annual client revenue</div>
+        <p class="proj-desc">Python web scraping system extracting commercial property data from municipal tax records — building a dataset of 1,500+ high-value properties with owner info, assessments, and full-value calculations for tax appeal targeting.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span><span class="proj-tag">Pandas</span>
+          <span class="proj-tag">Web Scraping</span><span class="proj-tag">ETL</span>
+        </div>
+      </div>
+      <a href="#" class="proj-link">GitHub ↗</a>
+    </div>
+
+    <div class="project-row reveal">
+      <div class="proj-num">03</div>
+      <div>
+        <div class="proj-type">Power Automate · Operations</div>
+        <div class="proj-title">Full Business Process Automation — Tax Appeal Lifecycle</div>
+        <div class="proj-impact">↓ Manual management eliminated across entire appeal workflow</div>
+        <p class="proj-desc">End-to-end automation using Power Automate, Outlook, and Excel covering filing, client communications, hearing coordination, invoicing, and resolution tracking — removing human bottlenecks from every stage.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Power Automate</span><span class="proj-tag">Office Scripts</span>
+          <span class="proj-tag">Excel</span><span class="proj-tag">Outlook</span>
+        </div>
+      </div>
+      <a href="#" class="proj-link">GitHub ↗</a>
+    </div>
+
+    <div class="project-row reveal">
+      <div class="proj-num">04</div>
+      <div>
+        <div class="proj-type">Python · SQL · Retail Analytics</div>
+        <div class="proj-title">Customer Purchase Barrier Analysis (20K+ Records)</div>
+        <div class="proj-impact">↑ Insights adopted into sales conversion strategy</div>
+        <p class="proj-desc">Analyzed 20,000+ customer records using Python to classify and frequency-rank the top 5 purchase barriers. Delivered structured recommendations to sales leadership that directly informed conversion rate improvements.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span><span class="proj-tag">Pandas</span>
+          <span class="proj-tag">EDA</span><span class="proj-tag">Classification</span>
+        </div>
+      </div>
+      <a href="#" class="proj-link">GitHub ↗</a>
+    </div>
+
+    <div class="project-row reveal">
+      <div class="proj-num">05</div>
+      <div>
+        <div class="proj-type">Microsoft Fabric · SQL Server · Data Engineering</div>
+        <div class="proj-title">SQL Server → Microsoft Fabric Migration & UAT</div>
+        <div class="proj-impact">↓ Zero data loss across all financial & operational datasets</div>
+        <p class="proj-desc">Supported full migration from legacy SQL Server to Microsoft Fabric. Conducted UAT to validate data accuracy, identified and resolved discrepancies before go-live — ensuring a seamless transition with no data integrity issues.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Microsoft Fabric</span><span class="proj-tag">SQL Server</span>
+          <span class="proj-tag">UAT</span><span class="proj-tag">Data Validation</span>
+        </div>
+      </div>
+      <a href="#" class="proj-link">GitHub ↗</a>
+    </div>
+
+  </div>
+</section>
+
+<section id="experience">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-label">02 · Experience</span>
+      <h2>Work History</h2>
+    </div>
+
+    <div class="exp-row reveal">
+      <div>
+        <div class="exp-date">Feb 2025 — Jan 2026</div>
+        <div class="exp-co">Property Tax Advisors</div>
+        <div class="exp-loc">Dover, NH</div>
+      </div>
+      <div>
+        <div class="exp-role">Data & Operations Manager</div>
+        <ul class="exp-bullets">
+          <li>Built Python web scraping system generating a <strong>$1B+ prospecting dataset</strong> of 1,500+ commercial properties ($3M+ valuations)</li>
+          <li>Drove <strong>$100K–$200K in additional annual client revenue</strong> by expanding filings from ~80 to 150+ per cycle</li>
+          <li>Engineered end-to-end workflow automation via Power Automate across the full tax appeal lifecycle</li>
+          <li>Sole Microsoft 365 Administrator — Entra ID, MFA, Conditional Access, Intune, SharePoint</li>
+          <li>Saved <strong>$20K+</strong> by decommissioning legacy network and deploying RAID 1 NAS infrastructure</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-row reveal">
+      <div>
+        <div class="exp-date">Nov 2024 — Feb 2025</div>
+        <div class="exp-co">Lovesac (Contract)</div>
+        <div class="exp-loc">Stamford, CT · Remote</div>
+      </div>
+      <div>
+        <div class="exp-role">Data Analyst — Retail Operations</div>
+        <ul class="exp-bullets">
+          <li>Eliminated <strong>5+ hours of manual processing weekly</strong> by automating the full reporting pipeline</li>
+          <li>Analyzed 20,000+ customer records to surface the top 5 purchase barriers for sales leadership</li>
+          <li>Supported Microsoft Fabric migration from SQL Server with <strong>zero data loss</strong></li>
+          <li>Diagnosed network latency from 30+ simultaneous Power BI loads; recommended segmented data models</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-row reveal">
+      <div>
+        <div class="exp-date">Jun 2024</div>
+        <div class="exp-co">Nafshi Inc.</div>
+        <div class="exp-loc">Australia · Remote</div>
+      </div>
+      <div>
+        <div class="exp-role">Data Analyst — Project Consultant</div>
+        <ul class="exp-bullets">
+          <li>Designed analytical framework and ETL specifications for mental health program evaluation</li>
+          <li>Defined KPIs and baseline metrics enabling longitudinal patient outcome tracking across programs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-row reveal">
+      <div>
+        <div class="exp-date">Dec 2019 — May 2022</div>
+        <div class="exp-co">Bangor Savings Bank</div>
+        <div class="exp-loc">Portsmouth, NH</div>
+      </div>
+      <div>
+        <div class="exp-role">Sr. Customer Analyst — Retail Operations</div>
+        <ul class="exp-bullets">
+          <li>Reduced annual operational costs by <strong>$100K</strong> through data-driven branch traffic and staffing analysis</li>
+          <li>Built Excel fraud detection workflows analyzing transactional patterns and voice biometrics</li>
+          <li>Delivered weekly executive dashboards tracking customer lifecycle and branch performance KPIs</li>
+          <li>Maintained <strong>100% regulatory compliance</strong> as Security Champion for an 11-member team</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-label">03 · Credentials</span>
+      <h2>Certifications</h2>
+    </div>
+    <div class="certs-grid reveal">
+      <div class="cert-card">
+        <div class="cert-badge">SEC+</div>
+        <div class="cert-name">Security+</div>
+        <div class="cert-issuer">CompTIA</div>
+        <div class="cert-exp">Valid through February 2029</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">DP-600</div>
+        <div class="cert-name">Fabric Analytics Engineer Associate</div>
+        <div class="cert-issuer">Microsoft</div>
+        <div class="cert-exp">Valid through October 2026</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">PL-300</div>
+        <div class="cert-name">Power BI Data Analyst Associate</div>
+        <div class="cert-issuer">Microsoft</div>
+        <div class="cert-exp">Valid through February 2027</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">AZ-900</div>
+        <div class="cert-name">Azure Fundamentals</div>
+        <div class="cert-issuer">Microsoft</div>
+        <div class="cert-exp">No expiration</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-label">04 · Capabilities</span>
+      <h2>Technical Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="reveal">
+        <div class="skill-group-name">Languages & Querying</div>
+        <div class="skill-list">
+          <div class="skill-item">Python (Pandas, NumPy)</div>
+          <div class="skill-item">SQL</div>
+          <div class="skill-item">DAX</div>
+          <div class="skill-item">R</div>
+          <div class="skill-item">JavaScript · VBA · Office Scripts</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="skill-group-name">BI & Reporting</div>
+        <div class="skill-list">
+          <div class="skill-item">Power BI — Semantic Models, Star Schema</div>
+          <div class="skill-item">Advanced Excel — Power Query, PivotTables</div>
+          <div class="skill-item">KPI Development & Financial Modeling</div>
+          <div class="skill-item">Executive Dashboard Design</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="skill-group-name">Data Engineering</div>
+        <div class="skill-list">
+          <div class="skill-item">Microsoft Fabric</div>
+          <div class="skill-item">Azure</div>
+          <div class="skill-item">ETL Pipeline Design</div>
+          <div class="skill-item">EDA · Data Normalization · UAT</div>
+          <div class="skill-item">Web Scraping</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="skill-group-name">Automation & Administration</div>
+        <div class="skill-list">
+          <div class="skill-item">Power Automate · Power Platform</div>
+          <div class="skill-item">Microsoft 365 Administration</div>
+          <div class="skill-item">SharePoint · Intune · Entra ID</div>
+          <div class="skill-item">Fraud Detection · Compliance</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="border-bottom:none;">
+  <div class="container">
+    <div class="contact-wrap">
+      <div class="sec-header reveal">
+        <span class="sec-label">05 · Contact</span>
+        <h2>Let's Talk</h2>
+      </div>
+      <p class="reveal">Open to Data Analyst and BI Engineer roles in banking, real estate, and retail. Available immediately.</p>
+      <div class="contact-grid reveal">
+        <a href="/cdn-cgi/l/email-protection#f0839186998491de9f9b98858983959eb0979d91999cde939f9d" class="contact-item">
+          <span class="contact-item-label">Email</span>
+          <span class="contact-item-val"><span class="__cf_email__" data-cfemail="3f4c5e49564b5e115054574a464c5a517f58525e5653115c5052">[email&#160;protected]</span></span>
+        </a>
+        <a href="https://www.linkedin.com/in/savitao110613ss" class="contact-item" target="_blank">
+          <span class="contact-item-label">LinkedIn</span>
+          <span class="contact-item-val">linkedin.com/in/savitao110613ss</span>
+        </a>
+        <a href="https://github.com/SavitaOkhuysen" class="contact-item" target="_blank">
+          <span class="contact-item-label">GitHub</span>
+          <span class="contact-item-val">github.com/SavitaOkhuysen</span>
+        </a>
+        <a href="./resume.pdf" class="contact-item">
+          <span class="contact-item-label">Resume</span>
+          <span class="contact-item-val">Download PDF ↓</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 Savita Okhuysen</div>
+  <div>Portsmouth, NH · Open to Remote</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entri
